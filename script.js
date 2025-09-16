@@ -51,15 +51,20 @@
 
   // Rooms
   const ROOMS = [
-    { id: 'ml-301', title:'ML 301', meta:'ML Building, 3rd Floor', allowedCourse: null},
-    { id: 'cl-001', title:'CL 001', meta:'CL Building, 3rd Floor', allowedCourse: null},
-    { id: 'cl-003', title:'CL 003', meta:'CL Building, 3rd Floor', allowedCourse: null},
-    { id: 'el-409', title:'EL 409', meta:'EL Building, 3rd Floor', allowedCourse: null},
-    { id: 'cl-005', title:'CL 005', meta:'CL Building, 3rd Floor', allowedCourse: null},
-    { id: 'ab 302', title:'AB 302', meta:'AB Building, 3rd Floor', allowedCourse: null},
-    { id: 'GYM', title:'GYM/P-VILLA', meta:'TOP Building, 3rd Floor', allowedCourse: null},
-    { id: 'ab 303', title:'AB 303', meta:'AB Building, 3rd Floor', allowedCourse: null},
-    { id: 'cl 006', title:'CL 006', meta:'CL Building, 3rd Floor', allowedCourse: null},
+    { id: 'ml-301', title:'ML 301', meta:'Main Building, 3rd Floor', allowedCourse: null},
+    { id: 'cl-001', title:'CL 001', meta:'Main Building, 3rd Floor', allowedCourse: null},
+    { id: 'cl-003', title:'CL 003', meta:'Main Building, 3rd Floor', allowedCourse: null},
+    { id: 'el-409', title:'EL 409', meta:'Main Building, 3rd Floor', allowedCourse: null},
+    { id: 'cl-005', title:'CL 005', meta:'Main Building, 3rd Floor', allowedCourse: null},
+    { id: 'ab 302', title:'AB 302', meta:'Main Building, 3rd Floor', allowedCourse: null},
+    { id: 'GYM', title:'GYM/P-VILLA', meta:'Main Building, 3rd Floor', allowedCourse: null},
+    { id: 'ab-303', title:'AB 303', meta:'Main Building, 3rd Floor', allowedCourse: null},
+    { id: 'ab-304', title:'AB 303', meta:'Main Building, 3rd Floor', allowedCourse: null},
+    { id: 'ab-304', title:'AB 303', meta:'Main Building, 3rd Floor', allowedCourse: null},
+    { id: 'ab-304', title:'AB 303', meta:'Main Building, 3rd Floor', allowedCourse: null},
+    { id: 'ab-304', title:'AB 303', meta:'Main Building, 3rd Floor', allowedCourse: null},
+    { id: 'ab-304', title:'AB 303', meta:'Main Building, 3rd Floor', allowedCourse: null}
+    
   ];
 
   // Attendance store
@@ -811,8 +816,8 @@ function joinRoom(room) {
   window._ams.getLocks = () => JSON.parse(JSON.stringify(roomLocks));
   window._ams.getDB = () => JSON.parse(JSON.stringify(getDB())); 
 
-
 })();
+
 
 
 
