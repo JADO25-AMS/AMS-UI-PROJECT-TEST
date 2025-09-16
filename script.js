@@ -58,13 +58,7 @@
     { id: 'cl-005', title:'CL 005', meta:'Main Building, 3rd Floor', allowedCourse: null},
     { id: 'ab 302', title:'AB 302', meta:'Main Building, 3rd Floor', allowedCourse: null},
     { id: 'GYM', title:'GYM/P-VILLA', meta:'Main Building, 3rd Floor', allowedCourse: null},
-    { id: 'ab-303', title:'AB 303', meta:'Main Building, 3rd Floor', allowedCourse: null},
-    { id: 'ab-304', title:'AB 303', meta:'Main Building, 3rd Floor', allowedCourse: null},
-    { id: 'ab-304', title:'AB 303', meta:'Main Building, 3rd Floor', allowedCourse: null},
-    { id: 'ab-304', title:'AB 303', meta:'Main Building, 3rd Floor', allowedCourse: null},
-    { id: 'ab-304', title:'AB 303', meta:'Main Building, 3rd Floor', allowedCourse: null},
-    { id: 'ab-304', title:'AB 303', meta:'Main Building, 3rd Floor', allowedCourse: null}
-    
+    { id: 'ab-303', title:'AB 303', meta:'Main Building, 3rd Floor', allowedCourse: null} 
   ];
 
   // Attendance store
@@ -817,6 +811,7 @@ function joinRoom(room) {
   window._ams.getDB = () => JSON.parse(JSON.stringify(getDB())); 
 
 })();
+
 
 
 
