@@ -59,6 +59,7 @@
     { id: 'ab 302', title:'AB 302', meta:'AB Building, 3rd Floor', allowedCourse: null},
     { id: 'GYM', title:'GYM/P-VILLA', meta:'TOP Building, 3rd Floor', allowedCourse: null},
     { id: 'ab 303', title:'AB 303', meta:'AB Building, 3rd Floor', allowedCourse: null},
+    { id: 'cl 006', title:'CL 006', meta:'CL Building, 3rd Floor', allowedCourse: null},
   ];
 
   // Attendance store
@@ -812,6 +813,7 @@ function joinRoom(room) {
 
 
 })();
+
 
 
 
