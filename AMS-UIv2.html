@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>A.M.S-UI - Attendance Monitoring System for Phinma-UI Students</title>
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="AMS-UI.css">
+</head>
+<body>
+  <div class="bg-wrap" aria-hidden="true">
+    <video id="bg-video" autoplay muted loop playsinline preload="auto" poster="d:\test screen play.mp4">
+      <source src="d:\test screen play.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="bg-overlay" aria-hidden="true"></div>
+
+  <div class="container">
+
+    <header class="site-header">
+      <div class="logo">UI</div>
+      <div>
+        <h1>A.M.S-UI</h1>
+        <p>Attendance Monitoring System for Phinma-UI Students</p>
+      </div>
+    </header>
+
+    <!-- AUTH (login/register) -->
+    <div id="authSection" class="card auth-wrap">
+      <div>
+        <h3>Login</h3>
+        <p class="small-note">Login with your Student ID in the format <strong>00-0000-000000</strong></p>
+        <form id="loginForm">
+          <label for="loginId">Student ID</label>
+          <input id="loginId" name="loginId" type="text" placeholder="00-0000-000000" required>
+          <div class="form-btn-row">
+            <button type="submit" class="btn">Login</button>
+            <button type="button" id="toRegister" class="btn secondary">Register Student-ID</button>
+          </div>
+          <div id="loginMsg" class="small-note login-msg"></div>
+        </form>
+      </div>
+
+      <div class="card quick-info">
+        <h3>Quick info</h3>
+        <p class="small-note">Reminder: IF YOUR STUDENT ID IS NOT REGISTERED THE SYSTEM WILL SHOW <strong>"invalid in database please register this id"</strong></p>
+        <p class="small-note">Reminder: AFTER REGISTERING YOUR ID REFRESH THE PAGE TO GO BACK TO THE LOGIN PAGE</p>
+      </div>
+
+      <!-- Register form hidden by default -->
+      <div id="registerCard" class="card hidden">
+        <h3>Register Student and ID</h3>
+        <form id="registerForm">
+          <label for="fullName">Full name (Surname First Middle Last)</label>
+          <input id="fullName" name="fullName" type="text" placeholder="Doe, John Michael" required>
+
+          <label for="regStudentId">Student ID (format 00-0000-000000)</label>
+          <input id="regStudentId" name="regStudentId" type="text" placeholder="00-0000-000000" required>
+
+          <label for="age">Age</label>
+          <input id="age" name="age" type="number" min="10" max="120" required>
+
+          <label for="section">Section</label>
+          <input id="section" name="section" type="text" placeholder="A" required>
+
+          <label for="course">Course</label>
+          <input id="course" name="course" type="text" placeholder="BSIT" required>
+
+          <label for="email">PHINMAED Gmail (must end with <code>phinmaed.com</code>)</label>
+          <input id="email" name="email" type="email" placeholder="name@phinmaed.com" required>
+
+          <label for="phone">Phone number</label>
+          <input id="phone" name="phone" type="tel" placeholder="09171234567" required>
+
+          <div class="form-btn-row">
+            <button type="submit" class="btn">Save and Register</button>
+            <button type="button" id="cancelRegister" class="btn secondary">Cancel</button>
+          </div>
+          <div id="regMsg" class="small-note reg-msg"></div>
+        </form>
+      </div>
+    </div>
+
+    <!-- DASHBOARD (hidden until login) -->
+    <div id="dashSection" class="hidden">
+      <div class="card row align-start">
+        <div class="col-left">
+          <div class="profile-card">
+            <div class="avatar" id="avatarLetters">JD</div>
+            <div class="profile-info">
+              <div id="dashFullName" class="bold"></div>
+              <small id="dashStudentId"></small>
+            </div>
+          </div>
+
+          <div class="col-btn-group">
+            <button id="settingsBtn" class="btn secondary">Settings / Edit Info</button>
+            <button id="logoutBtn" class="btn danger">Logout</button>
+          </div>
+        </div>
+
+        <div class="col-main">
+          <div class="searchbar-row">
+            <div class="searchbar">
+              <input id="roomSearch" placeholder="Search rooms (e.g., Room A, Lab 1)..." />
+              <button id="searchBtn" class="btn secondary">Search</button>
+            </div>
+            <div class="small-note muted">Logged in</div>
+          </div>
+
+          <div id="roomsArea">
+            <h4 class="mt-14">Available Rooms</h4>
+            <div id="roomsList" class="rooms-grid"></div>
+          </div>
+
+          <div id="joinedRoomCard" class="card">
+            <div class="joined-header">
+              <div>
+                <div id="joinedRoomTitle">Room A</div>
+                <div class="small-note" id="joinedRoomMeta">Section / Course</div>
+              </div>
+              <div class="joined-actions">
+                <button id="leaveRoomBtn" class="btn secondary">Leave</button>
+                <button id="saveAttendanceBtn" class="btn">Save Attendance</button>
+              </div>
+            </div>
+
+            <div class="joined-body">
+              <div class="chat-area">
+                Messaging is disabled in rooms. Only attendance actions are allowed.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- settings modal -->
+      <div id="settingsModal" class="overlay">
+        <div class="modal">
+          <h3>Edit your information</h3>
+          <form id="settingsForm">
+            <label>Full name</label>
+            <input id="set_fullName" required>
+            <label>Student ID</label>
+            <input id="set_studentId" required>
+            <label>Age</label>
+            <input id="set_age" type="number" required>
+            <label>Section</label>
+            <input id="set_section" required>
+            <label>Course</label>
+            <input id="set_course" required>
+            <label>Email (must end with phinmaed.com)</label>
+            <input id="set_email" type="email" required>
+            <label>Phone</label>
+            <input id="set_phone" required>
+            <div class="form-btn-row">
+              <button class="btn" type="submit">Save changes</button>
+              <button type="button" id="closeSettings" class="btn secondary">Close</button>
+            </div>
+            <div id="settingsMsg" class="small-note settings-msg"></div>
+          </form>
+        </div>
+      </div>
+
+      <!-- confirmation modal -->
+      <div id="confirmModal" class="overlay">
+        <div class="modal">
+          <h3>Confirm download</h3>
+          <p class="small-note">Are you sure you want to download it?</p>
+          <label class="confirm-label">
+            <input id="confirmCheck" type="checkbox"> <span class="small-note">I confirm all students are present</span>
+          </label>
+          <div class="form-btn-row">
+            <button id="proceedDownload" class="btn" disabled>Proceed & Download PDF</button>
+            <button id="cancelDownload" class="btn secondary">Cancel</button>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div>A.M.S.S-UI — Demo | Attendance Report (Alphabetical Order)</div>
+        <div>© All Rights Reserved — S.S.G.C.N</div>
+      </footer>
+      
+    </div>
+  </div>
+
+  <!-- jsPDF (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+
+  <!-- External JavaScript -->
+  <script src="AMS-UI.js"></script>
+</body>
+</html>
