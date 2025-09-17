@@ -71,13 +71,34 @@
   // Rooms
   const ROOMS = [
     { id: 'ml-301', title:'ML 301', meta:'CL Building, 3rd Floor', allowedCourse: null},
-    { id: 'cl-001', title:'CL 001', meta:'CL Building, 3rd Floor', allowedCourse: null},
+    { id: 'cl-001', title:'CL 001', meta:'CL Building, 2rd Floor', allowedCourse: null},
     { id: 'cl-003', title:'CL 003', meta:'CL Building, 3rd Floor', allowedCourse: null},
     { id: 'el-409', title:'EL 409', meta:'EL Building, 3rd Floor', allowedCourse: null},
     { id: 'cl-005', title:'CL 005', meta:'CL Building, 3rd Floor', allowedCourse: null},
     { id: 'ab 302', title:'AB 302', meta:'AB Building, 3rd Floor', allowedCourse: null},
     { id: 'GYM', title:'GYM/P-VILLA', meta:'Top Building, 3rd Floor/Punta Villa', allowedCourse: null},
     { id: 'ab-303', title:'AB 303', meta:'AB Building, 3rd Floor', allowedCourse: null},
+    { id: 'exe-404', title:'exe-404', meta:'Test Room, Not Available Yet', allowedCourse: null},
+    { id: 'exe-404', title:'exe-404', meta:'Test Room, Not Available Yet', allowedCourse: null},
+    { id: 'exe-404', title:'exe-404', meta:'Test Room, Not Available Yet', allowedCourse: null},
+    { id: 'exe-404', title:'exe-404', meta:'Test Room, Not Available Yet', allowedCourse: null},
+    { id: 'exe-404', title:'exe-404', meta:'Test Room, Not Available Yet', allowedCourse: null},
+    { id: 'exe-404', title:'exe-404', meta:'Test Room, Not Available Yet', allowedCourse: null},
+    { id: 'exe-404', title:'exe-404', meta:'Test Room, Not Available Yet', allowedCourse: null},
+    { id: 'exe-404', title:'exe-404', meta:'Test Room, Not Available Yet', allowedCourse: null},
+    { id: 'exe-404', title:'exe-404', meta:'Test Room, Not Available Yet', allowedCourse: null},
+    { id: 'exe-404', title:'exe-404', meta:'Test Room, Not Available Yet', allowedCourse: null},
+    { id: 'exe-404', title:'exe-404', meta:'Test Room, Not Available Yet', allowedCourse: null},
+    { id: 'exe-404', title:'exe-404', meta:'Test Room, Not Available Yet', allowedCourse: null},
+    { id: 'exe-404', title:'exe-404', meta:'Test Room, Not Available Yet', allowedCourse: null},
+    { id: 'exe-404', title:'exe-404', meta:'Test Room, Not Available Yet', allowedCourse: null},
+    { id: 'exe-404', title:'exe-404', meta:'Test Room, Not Available Yet', allowedCourse: null},
+    { id: 'exe-404', title:'exe-404', meta:'Test Room, Not Available Yet', allowedCourse: null},
+    { id: 'exe-404', title:'exe-404', meta:'Test Room, Not Available Yet', allowedCourse: null},
+    { id: 'exe-404', title:'exe-404', meta:'Test Room, Not Available Yet', allowedCourse: null},
+    { id: 'exe-404', title:'exe-404', meta:'Test Room, Not Available Yet', allowedCourse: null},
+    { id: 'exe-404', title:'exe-404', meta:'Test Room, Not Available Yet', allowedCourse: null}
+    
   ];
 
   // Attendance store
