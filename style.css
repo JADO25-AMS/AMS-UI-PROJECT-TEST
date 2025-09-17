@@ -108,6 +108,12 @@
       grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
       gap:12px;
       margin-top:10px;
+
+      /* scroll feature */
+      max-height: 400px;    /* limit container height */
+      overflow-y: auto;     /* vertical scroll */
+      overflow-x: hidden;   /* prevent horizontal scroll */
+      padding-right: 6px;   /* spacing for scrollbar */
     }
     .room{
       padding:12px;border-radius:10px;border:1px solid #e9f0ff;background:linear-gradient(180deg,#fff,#fcfeff);
@@ -149,4 +155,7 @@
     .chat-area{ border:1px dashed #e6eef8; padding:12px; border-radius:10px; min-height:90px; color:var(--muted) }
 
     footer{ margin-top:16px; font-size:13px; color:var(--muted); text-align:center }
+
+
     
+
