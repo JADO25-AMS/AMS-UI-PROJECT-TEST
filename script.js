@@ -642,8 +642,8 @@ function joinRoom(room) {
           y = margin;
         }
 
-        // Numbering starts at 0
-        doc.text(String(idx), margin, y);
+        // ✅ Numbering starts at 1 instead of 0
+        doc.text(String(idx + 1), margin, y);
 
         // Check if student is in demo list
         if (demoIds.includes(s.studentId)) {
@@ -673,7 +673,9 @@ function joinRoom(room) {
       console.error(err);
       alert('Failed to create PDF. Make sure jsPDF is loaded.');
     }
-  }); // ✅ closes proceedDownload.addEventListener
+  });
+  
+  // ✅ closes proceedDownload.addEventListener
 
   // DASHBOARD
   function showDashboard(){
