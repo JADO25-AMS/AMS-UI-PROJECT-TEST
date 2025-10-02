@@ -39,7 +39,12 @@
   // Semantics: setting a timer creates a lockAt timestamp in the future; before lockAt, room is open.
   // After lockAt passes, the room is considered locked to non-owners and will remain locked until the owner leaves.
   function getRoomLocks(){ try { return JSON.parse(localStorage.getItem('ams-ui_roomLocks') || '{}'); } catch (e) { return {}; } }
-  function saveRoomLocks(locks){ localStorage.setItem('ams-ui_roomLocks', JSON.stringify(locks)); }
+  function saveRoomLocks(locks){
+  // always write the full object
+  localStorage.setItem('ams-ui_roomLocks', JSON.stringify(locks));
+  roomLocks = JSON.parse(JSON.stringify(locks));
+  }
+
 
   // Demo data
   function ensureDemoData(){
@@ -50,15 +55,15 @@
         { fullName:'Ken Lester C. Sitjar', studentId:'04-2425-000689', age:20, section:'Redacted', course:'BSIT', email:'keco.sitjar.ui@phinmaed.com', phone:'Redacted' },
         { fullName:'Shanice Gabanes', studentId:'04-2425-000617', age:20, section:'Redacted', course:'BSIT', email:'jshja.gabanes.ui@phinmaed.com', phone:'Redacted' },
         { fullName:'Hanna Jean C. Calawigan', studentId:'04-2425-045794', age:20, section:'Redacted', course:'BSIT', email:'haca.cabaya.ui@phinmaed.com', phone:'Redacted' },
-        { fullName:'Zesty Kein Mondia', studentId:'11-1111-111111', age:Redacted, section:'Redacted', course:'BSIT', email:'Redacted', phone:'Redacted' },
-        { fullName:'Fritz Neyra Tanangonan', studentId:'22-2222-222222', age:Redacted, section:'Redacted', course:'BSIT', email:'Redacted', phone:'Redacted' },
-        { fullName:'Leah Antonette Piodena', studentId:'66-6666-666666', age:Redacted, section:'Redacted', course:'BSIT', email:'Redacted', phone:'Redacted' },
-        { fullName:'Chrischel Joy Lorenzo', studentId:'44-4444-444444', age:Redacted, section:'Redacted', course:'BSIT', email:'Redacted', phone:'Redacted' },
-        { fullName:'Art Jayson L. Osuyos', studentId:'55-5555-555555', age:Redacted, section:'Redacted', course:'BSIT', email:'Redacted', phone:'Redacted' },
-        { fullName:'Rey Ann Burgos', studentId:'77-7777-777777', age:Redacted, section:'Redacted', course:'BSIT', email:'Redacted', phone:'Redacted' },
-        { fullName:'Frank Michael Gamino', studentId:'33-3333-333333', age:Redacted, section:'Redacted', course:'BSIT', email:'Redacted', phone:'Redacted' },
-        { fullName:'Janine Marie Mae Peña', studentId:'88-8888-888888', age:Redacted, section:'Redacted', course:'BSIT', email:'Redacted', phone:'Redacted' },
-        { fullName:'Melene Akil', studentId:'99-9999-999999', age:Redacted, section:'Redacted', course:'BSIT', email:'Redacted', phone:'Redacted' },
+        { fullName:'Zesty Kein Mondia', studentId:'11-1111-111111', age:30, section:'Redacted', course:'BSIT', email:'Redacted', phone:'Redacted' },
+        { fullName:'Fritz Neyra Tanangonan', studentId:'22-2222-222222', age:30, section:'Redacted', course:'BSIT', email:'Redacted', phone:'Redacted' },
+        { fullName:'Leah Antonette Piodena', studentId:'66-6666-666666', age:30, section:'Redacted', course:'BSIT', email:'Redacted', phone:'Redacted' },
+        { fullName:'Chrischel Joy Lorenzo', studentId:'44-4444-444444', age:30, section:'Redacted', course:'BSIT', email:'Redacted', phone:'Redacted' },
+        { fullName:'Art Jayson L. Osuyos', studentId:'55-5555-555555', age:30, section:'Redacted', course:'BSIT', email:'Redacted', phone:'Redacted' },
+        { fullName:'Rey Ann Burgos', studentId:'77-7777-777777', age:30, section:'Redacted', course:'BSIT', email:'Redacted', phone:'Redacted' },
+        { fullName:'Frank Michael Gamino', studentId:'33-3333-333333', age:30, section:'Redacted', course:'BSIT', email:'Redacted', phone:'Redacted' },
+        { fullName:'Janine Marie Mae Peña', studentId:'88-8888-888888', age:30, section:'Redacted', course:'BSIT', email:'Redacted', phone:'Redacted' },
+        { fullName:'Melene Akil', studentId:'99-9999-999999', age:30, section:'Redacted', course:'BSIT', email:'Redacted', phone:'Redacted' },
         
         
       ];
@@ -75,30 +80,10 @@
     { id: 'cl-003', title:'CL 003', meta:'CL Building, 3rd Floor', allowedCourse: null},
     { id: 'el-409', title:'EL 409', meta:'EL Building, 3rd Floor', allowedCourse: null},
     { id: 'cl-005', title:'CL 005', meta:'CL Building, 3rd Floor', allowedCourse: null},
-    { id: 'ab 302', title:'AB 302', meta:'AB Building, 3rd Floor', allowedCourse: null},
+    { id: 'ab-302', title:'AB 302', meta:'AB Building, 3rd Floor', allowedCourse: null},
     { id: 'GYM', title:'GYM/P-VILLA', meta:'Top Building, 3rd Floor/Punta Villa', allowedCourse: null},
     { id: 'ab-303', title:'AB 303', meta:'AB Building, 3rd Floor', allowedCourse: null},
     { id: 'exe-404', title:'exe-404', meta:'Test Room, Not Available Yet', allowedCourse: null},
-    { id: 'exe-404', title:'exe-404', meta:'Test Room, Not Available Yet', allowedCourse: null},
-    { id: 'exe-404', title:'exe-404', meta:'Test Room, Not Available Yet', allowedCourse: null},
-    { id: 'exe-404', title:'exe-404', meta:'Test Room, Not Available Yet', allowedCourse: null},
-    { id: 'exe-404', title:'exe-404', meta:'Test Room, Not Available Yet', allowedCourse: null},
-    { id: 'exe-404', title:'exe-404', meta:'Test Room, Not Available Yet', allowedCourse: null},
-    { id: 'exe-404', title:'exe-404', meta:'Test Room, Not Available Yet', allowedCourse: null},
-    { id: 'exe-404', title:'exe-404', meta:'Test Room, Not Available Yet', allowedCourse: null},
-    { id: 'exe-404', title:'exe-404', meta:'Test Room, Not Available Yet', allowedCourse: null},
-    { id: 'exe-404', title:'exe-404', meta:'Test Room, Not Available Yet', allowedCourse: null},
-    { id: 'exe-404', title:'exe-404', meta:'Test Room, Not Available Yet', allowedCourse: null},
-    { id: 'exe-404', title:'exe-404', meta:'Test Room, Not Available Yet', allowedCourse: null},
-    { id: 'exe-404', title:'exe-404', meta:'Test Room, Not Available Yet', allowedCourse: null},
-    { id: 'exe-404', title:'exe-404', meta:'Test Room, Not Available Yet', allowedCourse: null},
-    { id: 'exe-404', title:'exe-404', meta:'Test Room, Not Available Yet', allowedCourse: null},
-    { id: 'exe-404', title:'exe-404', meta:'Test Room, Not Available Yet', allowedCourse: null},
-    { id: 'exe-404', title:'exe-404', meta:'Test Room, Not Available Yet', allowedCourse: null},
-    { id: 'exe-404', title:'exe-404', meta:'Test Room, Not Available Yet', allowedCourse: null},
-    { id: 'exe-404', title:'exe-404', meta:'Test Room, Not Available Yet', allowedCourse: null},
-    { id: 'exe-404', title:'exe-404', meta:'Test Room, Not Available Yet', allowedCourse: null}
-    
   ];
 
   // Attendance store
@@ -147,23 +132,6 @@
   registerCard.style.display = 'none';    // hide register
   dashSection.style.display = 'none';     // hide dashboard
   joinedRoomCard.style.display = 'none';
-
-// Join room
-function joinRoom(room) {
-  currentRoom = room;
-
-  // update joined room UI
-  joinedRoomTitle.textContent = room.title;
-  joinedRoomMeta.textContent = room.meta || "Section / Course";
-
-  // 👇 show the joined card only when a room is joined
-  joinedRoomCard.style.display = "block";
-
-  systemNotify(currentUser.fullName + " joined " + room.title);
-
-  // start attendance timer or any other logic you already have
-  startTimer();
-}
 
   // Show Register, hide Login
   toRegisterBtn.addEventListener('click', ()=> { 
@@ -225,8 +193,27 @@ function joinRoom(room) {
   function validStudentIdFormat(id){ return STUDENT_ID_REGEX.test(normalizeId(id)); }
   function validPhinmaEmail(email){
     if(!email) return false;
-    return email.toLowerCase().endsWith('@' + PHINMA_EMAIL_SUFFIX) ||
-           (email.toLowerCase().endsWith('.' + PHINMA_EMAIL_SUFFIX) && email.toLowerCase().includes('@'));
+     const e = email.toLowerCase().trim();
+     return e.endsWith('@' + PHINMA_EMAIL_SUFFIX);
+  }
+
+   function renderProfile(){
+     if(!currentUser) {
+      dashFullName.textContent = '';
+      dashStudentId.textContent = '';
+      avatarLetters.textContent = 'S';
+      return;
+  }
+    dashFullName.textContent = currentUser.fullName || '';
+    dashStudentId.textContent = currentUser.studentId || '';
+    avatarLetters.textContent = initialsFromName(currentUser.fullName || '');
+  }
+
+  function sortNameKey(fullName){
+    const parts = (fullName || '').trim().split(/\s+/);
+    const surname = parts.length ? parts[parts.length - 1].toLowerCase() : '';
+    const rest = parts.slice(0, -1).join(' ').toLowerCase();
+    return [surname, rest];
   }
 
   function initialsFromName(name){
@@ -315,6 +302,18 @@ function joinRoom(room) {
   toRegisterBtn.addEventListener('click', ()=> { registerCard.style.display = 'block'; registerCard.scrollIntoView({behavior:'smooth'}); });
   cancelRegister.addEventListener('click', ()=> { registerCard.style.display = 'none'; });
 
+  if(!loginForm || !loginId || !authSection || !dashSection){
+  console.error('Required DOM elements missing. Check HTML IDs: loginForm, loginId, authSection, dashSection.');
+  // Optionally stop further initialization
+    return;
+  }
+
+  if(!loginForm || !loginId || !authSection || !dashSection){
+  console.error('Required DOM elements missing. Check HTML IDs: loginForm, loginId, authSection, dashSection.');
+  // Optionally stop further initialization
+    return;
+  }
+
   // REGISTER
   registerForm.addEventListener('submit', function(e){
     e.preventDefault();
@@ -339,6 +338,7 @@ function joinRoom(room) {
 
   // SETTINGS
   settingsBtn.addEventListener('click', ()=> {
+    if(!currentUser){ alert('Please login first.'); return; }
     settingsModal.style.display = 'flex';
     document.getElementById('set_fullName').value = currentUser.fullName;
     document.getElementById('set_studentId').value = currentUser.studentId;
@@ -499,33 +499,71 @@ function joinRoom(room) {
     scheduleExpirationCheck();
   }
 
-  // Leave room
-  leaveRoomBtn.addEventListener('click', function(){
-    joinedRoomCard.style.display = "none";
-    if(!currentRoom || !currentUser) return;
-    const arr = roomAttendance[currentRoom.id] || [];
-    const idx = arr.indexOf(currentUser.studentId);
-    if(idx !== -1){
-      arr.splice(idx,1);
-      roomAttendance[currentRoom.id] = arr;
-      saveAttendanceStore(roomAttendance);
-      systemNotify(currentUser.fullName + " left " + currentRoom.title);
-    }
+  function joinRoom(room) {
+  currentRoom = room;
+  joinedRoomTitle.textContent = room.title;
+  joinedRoomMeta.textContent = room.meta;
+  joinedRoomCard.style.display = 'block';
 
-    // If leaving user is demo owner, clear lock for the room
-    if(DEMO_IDS.includes(currentUser.studentId) && roomLocks[currentRoom.id]){
-      delete roomLocks[currentRoom.id];
-      saveRoomLocks(roomLocks);
-      systemNotify("Room lock removed as owner left.");
-    }
+  // ✅ safer way: always pull fresh store from localStorage
+  const store = getAttendanceStore();
+  const arr = store[room.id] || [];
 
-    currentRoom = null;
-    joinedRoomCard.style.display = 'none';
+  if (!arr.includes(currentUser.studentId)) {
+    arr.push(currentUser.studentId);
+    store[room.id] = arr;
+    saveAttendanceStore(store);
+    roomAttendance = store; // keep global in sync
+    systemNotify(currentUser.fullName + " joined " + room.title);
+  }
 
-    // clear timer UI/interval for this tab
-    clearTimerInterval();
-    updateTimerUI();
-  });
+  // If joining user is demo owner, set lock
+  if (DEMO_IDS.includes(currentUser.studentId)) {
+    roomLocks[room.id] = {
+      ownerId: currentUser.studentId,
+      time: Date.now()
+    };
+    saveRoomLocks(roomLocks);
+    systemNotify("Room locked by " + currentUser.fullName);
+  }
+
+  updateJoinedRoomInfo();
+}
+
+
+// Leave room
+leaveRoomBtn.addEventListener('click', function(){
+  joinedRoomCard.style.display = "none";
+  if(!currentRoom || !currentUser) return;
+
+  // ✅ safer way: always pull fresh store from localStorage
+  const store = getAttendanceStore();
+  const arr = store[currentRoom.id] || [];
+
+  const idx = arr.indexOf(currentUser.studentId);
+  if (idx !== -1) {
+    arr.splice(idx, 1);
+    store[currentRoom.id] = arr;
+    saveAttendanceStore(store);
+    roomAttendance = store; // keep global in sync
+    systemNotify(currentUser.fullName + " left " + currentRoom.title);
+  }
+
+  // If leaving user is demo owner, clear lock for the room
+  if (DEMO_IDS.includes(currentUser.studentId) && roomLocks[currentRoom.id]) {
+    delete roomLocks[currentRoom.id];
+    saveRoomLocks(roomLocks);
+    systemNotify("Room lock removed as owner left.");
+  }
+
+  currentRoom = null;
+  joinedRoomCard.style.display = 'none';
+
+  // clear timer UI/interval for this tab
+  clearTimerInterval();
+  updateTimerUI();
+});
+
 
   // SAVE ATTENDANCE
   saveAttendanceBtn.addEventListener('click', function(){
@@ -570,23 +608,20 @@ function joinRoom(room) {
     }
 
     // Sort alphabetically by surname, then first name
-    function sortNameKey(fn){
-      const parts = fn.split(',');
-      const surname = (parts[0] || '').trim().toLowerCase();
-      const rest = (parts[1] || '').trim().toLowerCase();
-      const restParts = rest.split(' ').filter(Boolean);
-      const first = restParts[0] || '';
-      const middle = restParts.slice(1).join(' ') || '';
-      return [surname, first, middle];
-    }
-    students.sort((a,b) => {
-      const A = sortNameKey(a.fullName);
-      const B = sortNameKey(b.fullName);
-      for(let i=0;i<3;i++){
-        if(A[i] < B[i]) return -1;
-        if(A[i] > B[i]) return 1;
-      }
-      return 0;
+     function sortNameKey(fullName){
+       const parts = (fullName || '').trim().split(/\s+/);
+       const surname = parts.length ? parts[parts.length - 1].toLowerCase() : '';
+       const rest = parts.slice(0, -1).join(' ').toLowerCase();
+       return [surname, rest];
+     }
+     sortNameKey((a,b) => {
+       const A = sortNameKey(a.fullName);
+       const B = sortNameKey(b.fullName);
+       if (A[0] < B[0]) return -1;
+       if (A[0] > B[0]) return 1;
+       if (A[1] < B[1]) return -1;
+       if (A[1] > B[1]) return 1;
+       return 0;
     });
 
     try {
@@ -702,11 +737,17 @@ function joinRoom(room) {
     scheduleExpirationCheck();
   }
 
-  function renderProfile(){
-    dashFullName.textContent = currentUser.fullName;
-    dashStudentId.textContent = currentUser.studentId;
-    avatarLetters.textContent = initialsFromName(currentUser.fullName);
+function renderProfile(){
+  if(!currentUser) {
+    dashFullName.textContent = '';
+    dashStudentId.textContent = '';
+    avatarLetters.textContent = 'S';
+    return;
   }
+  dashFullName.textContent = currentUser.fullName || '';
+  dashStudentId.textContent = currentUser.studentId || '';
+  avatarLetters.textContent = initialsFromName(currentUser.fullName || '');
+}
 
   // Room Timer Feature
   roomTimerBtn.addEventListener("click", () => {
