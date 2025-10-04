@@ -129,6 +129,163 @@
     return;
   }
 
+    // ---------- Remote config ----------
+  // Set this to the base URL of your API. Example: 'https://ams.example.com'
+  const API_BASE = ''; // <-- set to '' to disable remote, or 'https://yourserver.com' to enable
+  // If API_BASE is empty string '', remote functions will skip network and fallback to local.
+  function remoteEnabled(){ return !!API_BASE; }
+
+  // Timeout helper for fetch
+  function fetchWithTimeout(url, opts={}, timeout=7000){
+    return new Promise((resolve,reject)=>{
+      const timer = setTimeout(()=> reject(new Error('timeout')), timeout);
+      fetch(url, opts).then(res=>{
+        clearTimeout(timer);
+        resolve(res);
+      }).catch(err=>{
+        clearTimeout(timer);
+        reject(err);
+      });
+    });
+  }
+
+  // ---------- Remote wrapper functions (try remote, fallback local) ----------
+  async function remoteGetDB(){
+    if(!remoteEnabled()) return getDB();
+    try{
+      const res = await fetchWithTimeout(API_BASE + '/api/db', { method: 'GET', credentials: 'include' }, 6000);
+      if(!res.ok) throw new Error('bad response');
+      const j = await res.json();
+      if(j && j.ok && j.db) return j.db;
+      return getDB();
+    }catch(err){ return getDB(); }
+  }
+
+  async function remoteGetUser(studentId){
+    if(!remoteEnabled()) return (getDB()[studentId] || null);
+    try{
+      const res = await fetchWithTimeout(API_BASE + '/api/user/' + encodeURIComponent(studentId), { method:'GET', credentials:'include' }, 6000);
+      if(!res.ok) throw new Error('bad response');
+      const j = await res.json();
+      if(j && j.ok && j.user) return j.user;
+      return null;
+    }catch(err){
+      // fallback to local
+      const db = getDB();
+      return db[studentId] || null;
+    }
+  }
+
+  async function remoteRegister(userObj){
+    if(!remoteEnabled()){
+      const db = getDB(); db[userObj.studentId] = userObj; saveDB(db); return userObj;
+    }
+    try{
+      const res = await fetchWithTimeout(API_BASE + '/api/register', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        credentials: 'include',
+        body: JSON.stringify(userObj)
+      }, 8000);
+      if(!res.ok) throw new Error('bad response');
+      const j = await res.json();
+      if(j && j.ok && j.user){
+        // update local copy too
+        const db = getDB(); db[j.user.studentId] = j.user; saveDB(db);
+        return j.user;
+      } else {
+        // backend said no -> fallback to local registration
+        const db = getDB(); db[userObj.studentId] = userObj; saveDB(db); return userObj;
+      }
+    }catch(err){
+      // fallback local
+      const db = getDB(); db[userObj.studentId] = userObj; saveDB(db); return userObj;
+    }
+  }
+
+  async function remoteGetAttendance(){
+    if(!remoteEnabled()) return getAttendanceStore();
+    try{
+      const res = await fetchWithTimeout(API_BASE + '/api/attendance', { method:'GET', credentials:'include' }, 6000);
+      if(!res.ok) throw new Error('bad response');
+      const j = await res.json();
+      if(j && j.ok && j.attendance) return j.attendance;
+      return getAttendanceStore();
+    }catch(err){ return getAttendanceStore(); }
+  }
+
+  async function remoteSaveAttendance(store){
+    if(!remoteEnabled()){ saveAttendanceStore(store); return { ok:true }; }
+    try{
+      const res = await fetchWithTimeout(API_BASE + '/api/attendance', {
+        method:'POST',
+        headers:{ 'Content-Type':'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ attendance: store })
+      }, 8000);
+      if(!res.ok) throw new Error('bad response');
+      const j = await res.json();
+      if(j && j.ok){ saveAttendanceStore(store); return j; }
+      // fallback
+      saveAttendanceStore(store); return { ok:true, fallback:true };
+    }catch(err){
+      saveAttendanceStore(store); return { ok:true, fallback:true };
+    }
+  }
+
+  async function remoteGetRoomLocks(){
+    if(!remoteEnabled()) return getRoomLocks();
+    try{
+      const res = await fetchWithTimeout(API_BASE + '/api/roomLocks', { method:'GET', credentials:'include' }, 6000);
+      if(!res.ok) throw new Error('bad response');
+      const j = await res.json();
+      if(j && j.ok && j.locks) return j.locks;
+      return getRoomLocks();
+    }catch(err){ return getRoomLocks(); }
+  }
+
+  async function remoteSaveRoomLocks(locks){
+    if(!remoteEnabled()){ saveRoomLocks(locks); return { ok:true }; }
+    try{
+      const res = await fetchWithTimeout(API_BASE + '/api/roomLocks', {
+        method:'POST',
+        headers:{ 'Content-Type':'application/json' },
+        credentials:'include',
+        body: JSON.stringify({ locks })
+      }, 8000);
+      if(!res.ok) throw new Error('bad response');
+      const j = await res.json();
+      if(j && j.ok){ saveRoomLocks(locks); return j; }
+      saveRoomLocks(locks); return { ok:true, fallback:true };
+    }catch(err){
+      saveRoomLocks(locks); return { ok:true, fallback:true };
+    }
+  }
+
+  // ---------- Storage event sync: watch remote/local store at startup ----------
+  (async function initSyncFromRemote(){
+    if(remoteEnabled()){
+      // attempt to pull remote db, attendance, locks and seed local
+      const [rdb, ratt, rlocks] = await Promise.all([remoteGetDB(), remoteGetAttendance(), remoteGetRoomLocks()]);
+      // merge remote into local (remote wins)
+      const localDb = getDB();
+      const mergedDb = Object.assign({}, localDb, rdb);
+      saveDB(mergedDb);
+
+      const mergedAtt = Object.assign({}, getAttendanceStore(), ratt);
+      saveAttendanceStore(mergedAtt);
+      roomAttendance = mergedAtt;
+
+      const mergedLocks = Object.assign({}, getRoomLocks(), rlocks);
+      saveRoomLocks(mergedLocks);
+      roomLocks = mergedLocks;
+    } else {
+      // remote disabled, read from local as before
+      roomAttendance = getAttendanceStore();
+      roomLocks = getRoomLocks();
+    }
+  })();
+
   // Initial UI state
   authSection.style.display = 'block';
   registerCard.style.display = 'none';
@@ -926,3 +1083,4 @@ studentsModal.addEventListener("click", (e) => {
   window._ams.getDB = () => JSON.parse(JSON.stringify(getDB()));
 
 })();
+
